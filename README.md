@@ -14,7 +14,7 @@ Diese Daten stehen öffentlich zur Verfügung.
 
 Es gib 3 Möglichkeiten um an Datan zu kommen:
 -    API Abfragen:
-    - Umkreissuche
+     - Umkreissuche
      - Preisabfrage für einzelne Tankstellen
      - Detailabfrage für einzelne Tankstellen
      - P: keine historischen Daten, für Frage 2

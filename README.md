@@ -12,13 +12,13 @@ Diese Daten stehen öffentlich zur Verfügung.
 
 ## Vorüberlegungen
 ### Extrahieren
-Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an die benötigten Daten zu kommen:
+Es gib drei Möglichkeiten über https://creativecommons.tankerkoenig.de/ an die benötigten Daten zu kommen:
 -    API-Abfragen:
      - Umkreissuche
      - Preisabfrage für einzelne Tankstellen
      - Detailabfrage für einzelne Tankstellen
      - P: keine historischen Daten für Frage 2
-     - P: für Frage 1 und 3 müsste man so lange API-Abfragen machen, bis man die südlichste Tankstelle bzw den günstigsten Diesel gefunden hat. Laut Webseite soll man aber maximal alle 5min eine API-Abfrage machen und unnötige Belastung vermeiden.
+     - P: für Frage 1 und 3 müsste man so lange API-Abfragen machen, bis man die südlichste Tankstelle bzw. den günstigsten Diesel gefunden hat. Laut Webseite soll man aber maximal alle 5min eine API-Abfrage machen und unnötige Belastung vermeiden.
 - Postgres Dump für aktuelle und historische Daten
      - P: ziemlich viele Daten, die ich nicht brauche, weil Pakete mehrere Jahre enthalten (z.B.2020-2023)
      - P: Link hat leider gestern nicht funktioniert
@@ -27,7 +27,7 @@ Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an 
 ### Transformation
 Pandas oder PySpark?
 - Pandas: schnelles Setup
-- Pyspark: schnellere Verarbeitung
+- PySpark: schnellere Verarbeitung
 
 ### Laden
 Das Hochladen in eine PostgreSQL-Datenbank wäre sinnvoll, wenn weitere Analysen der Daten gewollt wären

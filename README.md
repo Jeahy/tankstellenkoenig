@@ -64,7 +64,7 @@ df = pd.read_csv(data_file)
 df = df.dropna(subset=['latitude', 'longitude'])
 df = df[df['latitude'] != 0.0]
 
-# Zeile mit dem minimalen Breitengradwert finden
+# Zeile mit dem niedrigsten Breitengradwert finden
 most_southern_station = df[df['latitude'] == df['latitude'].min()]
 
 # Name, Stadt und Breitengrad der südlichsten Tankstelle ausgeben

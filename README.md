@@ -115,7 +115,7 @@ Südlichste Tankstelle:
 Sinnvoll wären Plausibilitätsprüfungen anhand von höchstem Wert und Durchschnittswert.
 
 ## Frage 2: Wie hoch war 2022 der höchste Preis für E10?  
-Mein Python Skript mit Pandas:
+### Python Skript mit Pandas
 ```
 import os
 import pandas as pd
@@ -154,7 +154,7 @@ Ergebnis nach ein paar Minuten:
 ```
 Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
 ```
-Mein Python Skript mit PySpark
+### Python Skript mit PySpark
 ```
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, FloatType, TimestampType

@@ -2,6 +2,9 @@
 
 ## Fragen
 
+Unter https://creativecommons.tankerkoenig.de/ kannst du sämtliche Preise der deutschen Tankstellen abfragen.
+Diese Daten stehen öffentlich zur Verfügung.
+
 1. Welches ist die südlichste Tankstelle Deutschlands?
 2. Wie hoch war 2022 der höchste Preis für E10?
 3. Wo gab es vorgestern den günstigsten Diesel?
@@ -36,48 +39,8 @@ pip install pandas
 Manuelles Herunterladen der CSVs:   
 2024-04-07-prices.csv   
 2024-04-07-stations.csv   
-für Fragen 1 und 3
-und Download der 2022er Daten für Frage 2
-
-I created a new database, user and tables on my PostgreSQL server
-```
-psql -U postgres
-CREATE DATABASE tk_db;
-CREATE USER tk_user WITH PASSWORD 'tk_password';
-GRANT ALL PRIVILEGES ON DATABASE tk_db TO tk_user;
-CREATE TABLE gas_station_23 (
-    id UUID PRIMARY KEY NOT NULL,
-    version VARCHAR(10) NOT NULL,
-    version_time TIMESTAMP NOT NULL,
-    name TEXT NOT NULL,
-    brand TEXT,
-    street TEXT,
-    house_number TEXT,
-    post_code TEXT,
-    place TEXT,
-    public_holiday_identifier TEXT,
-    lat DOUBLE PRECISION NOT NULL,
-    lng DOUBLE PRECISION NOT NULL,
-    ot_json TEXT NOT NULL
-);
-CREATE TABLE
-CREATE TABLE gas_station_information_history_23 (
-    id SERIAL PRIMARY KEY,
-    stid UUID NOT NULL,
-    e5 SMALLINT,
-    e10 SMALLINT,
-    diesel SMALLINT,
-    date TIMESTAMP WITH TIME ZONE NOT NULL,
-    changed SMALLINT
-);
-```
-and the same for the 2020-2023 data
-
-I downloaded the data
-```
-sudo wget -O /home/pkn/tankstellenkoenig/data/history.dump.gz https://creativecommons.tankerkoenig.de/history/history.dump.gz
-```
-
+für Fragen 1 und 3   
+und Download aller CSVs für 2022 für Frage 2
 
 ## Frage 1: Welches ist die südlichste Tankstelle Deutschlands?
 
@@ -188,6 +151,38 @@ print(f"Der höchste Dieselwert war {highest_diesel_price} am {highest_diesel_da
 Ergebnis nach ein paar Minuten: 
 ```
 Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
+```
+I created a new database, user and tables on my PostgreSQL server
+```
+psql -U postgres
+CREATE DATABASE tk_db;
+CREATE USER tk_user WITH PASSWORD 'tk_password';
+GRANT ALL PRIVILEGES ON DATABASE tk_db TO tk_user;
+CREATE TABLE gas_station_22 (
+    id UUID PRIMARY KEY NOT NULL,
+    version VARCHAR(10) NOT NULL,
+    version_time TIMESTAMP NOT NULL,
+    name TEXT NOT NULL,
+    brand TEXT,
+    street TEXT,
+    house_number TEXT,
+    post_code TEXT,
+    place TEXT,
+    public_holiday_identifier TEXT,
+    lat DOUBLE PRECISION NOT NULL,
+    lng DOUBLE PRECISION NOT NULL,
+    ot_json TEXT NOT NULL
+);
+CREATE TABLE
+CREATE TABLE gas_station_information_history_22 (
+    id SERIAL PRIMARY KEY,
+    stid UUID NOT NULL,
+    e5 SMALLINT,
+    e10 SMALLINT,
+    diesel SMALLINT,
+    date TIMESTAMP WITH TIME ZONE NOT NULL,
+    changed SMALLINT
+);
 ```
 
 ## Frage 3: Wo gab es vorgestern den günstigsten Diesel?

@@ -26,12 +26,11 @@ Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an 
 
 ### Transformation
 Pandas oder PySpark?
-- Pandas: ausreichend für die Datenmenge, aber etwas langsam
-- Pyspark: schneller
+- Pandas: schnelles Setup
+- Pyspark: schnellere Verarbeitung
 
 ### Laden
-hochladen in PostgreSQL-Datenbank?
-- PostgreSQL: gut, falls weitere Analysen der Daten gewollt
+Das Hochladen in eine PostgreSQL-Datenbank wäre sinnvoll, wenn weitere Analysen der Daten gewollt wären
 
 ## Setup
 Ich habe ein Github Repository erstellt und es auf meinem Rechner dupliziert
@@ -71,9 +70,7 @@ most_southern_station = df[df['latitude'] == df['latitude'].min()]
 # Name, Stadt und Breitengrad der südlichsten Tankstelle ausgeben
 print("Südlichste Tankstelle:")
 print(most_southern_station[['name', 'city', 'latitude']])
-
 ```
-
 Zunächst bekam ich dieses Ergebnis:
 ```
 Südlichste Tankstelle:
@@ -105,7 +102,6 @@ Südlichste Tankstelle:
 17258                           Aral Tankstelle                           Essen       0.0
 17259                           Aral Tankstelle                   Heiligenstadt       0.0
 ```
-
 Dann habe ich mein Skript um diese Zeile ergänzt:
 ```
 df = df[df['latitude'] != 0.0]
@@ -116,10 +112,9 @@ Südlichste Tankstelle:
                                    name        city  latitude
 14758  Shell Mittenwald Am Brunnstein 2  Mittenwald  47.39957
 ```
-Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
+Sinnvoll wären Plausibilitätsprüfungen anhand von höchstem Wert und Durchschnittswert.
+
 ## Frage 2: Wie hoch war 2022 der höchste Preis für E10?  
-
-
 Mein Python Skript:
 ```
 import os
@@ -159,7 +154,7 @@ Ergebnis nach ein paar Minuten:
 ```
 Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
 ```
-
+Sinnvoll wären Plausibilitätsprüfungen anhand von niedrigstem Wert und Durchschnittswert.
 ## Frage 3: Wo gab es vorgestern den günstigsten Diesel?
 
 Mein Python Skript: 
@@ -170,7 +165,7 @@ import pandas as pd
 stations = pd.read_csv('/Users/jessica/dev/projects/tankstellenkoenig/data/2024-04-07-stations.csv')
 prices = pd.read_csv('/Users/jessica/dev/projects/tankstellenkoenig/data/2024-04-07-prices.csv')
 
-# Filter out rows with missing latitude or longitude values and latitude equal to 0.0
+# Filtere die Zeilen mit fehlenden Werten in der 'diesel' Spalte oder mit 0.0 als Wert
 prices = prices.dropna(subset=['diesel'])
 prices = prices[prices['diesel'] != 0.0]
 
@@ -196,7 +191,7 @@ Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:
 2  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:57:35+02
 3  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 22:13:54+02
 ```
-Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
+Sinnvoll wären Plausibilitätsprüfungen anhand von höchstem Wert und Durchschnittswert.
 
 ## Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 Vorhersage Benzinpreise für 2024

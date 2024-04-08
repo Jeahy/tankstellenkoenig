@@ -38,11 +38,12 @@ Downloaded the pandas library
 ```
 pip install pandas
 ```
-Manuelles Herunterladen der CSVs:   
+Manuelles Herunterladen der CSVs.   
+Für Fagen 1 und 3   
 2024-04-07-prices.csv   
 2024-04-07-stations.csv   
-für Fragen 1 und 3   
-und Download aller CSVs für 2022 für Frage 2
+und für Frage 2   
+aller CSVs für 2022
 
 ## Frage 1: Welches ist die südlichste Tankstelle Deutschlands?
 

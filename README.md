@@ -30,16 +30,16 @@ Pandas, PySpark oder hochladen in PostgreSQL-Datenbank?
 - PostgreSQL: gut, falls weitere Analysen der Daten gewollt
 
 ## Setup
-I created a Github repository and cloned it onto my virtual machine
+Ich habe ein Github Repository erstellt und es auf meinem Rechner dupliziert
 ```
 git clone https://github.com/Jeahy/tankstellenkoenig.git
 ```
-I installed a virtual environment and activated it, because I will try to solve the tasks with Python scripts
+habe eine Virtuelle Umgebung für Python erstellt und sie aktiviert
 ```
 virtualenv tkvenv
 source tkvenv/bin/activate
 ```
-Downloaded the pandas library
+die Pandas bibliothek installiert
 ```
 pip install pandas
 ```
@@ -116,7 +116,7 @@ Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
 ## Frage 2: Wie hoch war 2022 der höchste Preis für E10?  
 
 
-Hier das Python Skript:
+Mein Python Skript:
 ```
 import os
 import pandas as pd
@@ -155,42 +155,10 @@ Ergebnis nach ein paar Minuten:
 ```
 Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
 ```
-I created a new database, user and tables on my PostgreSQL server
-```
-psql -U postgres
-CREATE DATABASE tk_db;
-CREATE USER tk_user WITH PASSWORD 'tk_password';
-GRANT ALL PRIVILEGES ON DATABASE tk_db TO tk_user;
-CREATE TABLE gas_station_22 (
-    id UUID PRIMARY KEY NOT NULL,
-    version VARCHAR(10) NOT NULL,
-    version_time TIMESTAMP NOT NULL,
-    name TEXT NOT NULL,
-    brand TEXT,
-    street TEXT,
-    house_number TEXT,
-    post_code TEXT,
-    place TEXT,
-    public_holiday_identifier TEXT,
-    lat DOUBLE PRECISION NOT NULL,
-    lng DOUBLE PRECISION NOT NULL,
-    ot_json TEXT NOT NULL
-);
-CREATE TABLE
-CREATE TABLE gas_station_information_history_22 (
-    id SERIAL PRIMARY KEY,
-    stid UUID NOT NULL,
-    e5 SMALLINT,
-    e10 SMALLINT,
-    diesel SMALLINT,
-    date TIMESTAMP WITH TIME ZONE NOT NULL,
-    changed SMALLINT
-);
-```
 
 ## Frage 3: Wo gab es vorgestern den günstigsten Diesel?
 
-hier wieder ein Python Skript: 
+Mein Python Skript: 
 ```
 import pandas as pd
 

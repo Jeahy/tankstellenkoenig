@@ -108,11 +108,11 @@ Südlichste Tankstelle:
 14758  Shell Mittenwald Am Brunnstein 2  Mittenwald  47.39957
 ```
 Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
-## Frage 2: Wie hoch war 2022 der höchste Preis für E10?
-Pandas, Pyspark oder Postgres?
-Postgres für weitere Analyse
-Pandas würde vermutlich ausreichen bei der Datenmenge
-Pyspark etwas schneller
+## Frage 2: Wie hoch war 2022 der höchste Preis für E10?  
+Pandas, PySpark oder hochladen in PostgreSQL-Datenbank?
+- Pandas: ausreichend für die Datenmenge, aber etwas langsam
+- Pyspark: schneller
+- PostgreSQL: gut, falls weitere Analysen der Daten gewollt
 
 Hier das Python Skript:
 ```

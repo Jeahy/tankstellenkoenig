@@ -33,9 +33,9 @@ Downloaded the pandas library
 ```
 pip install pandas
 ```
-Manuelles Herunterladen der CSVs:
-2024-04-07-prices.csv
-2024-04-07-stations.csv
+Manuelles Herunterladen der CSVs:   
+2024-04-07-prices.csv   
+2024-04-07-stations.csv   
 für Fragen 1 und 3
 
 I created a new database, user and tables on my PostgreSQL server
@@ -101,6 +101,7 @@ print(most_southern_station[['name', 'city', 'latitude']])
 ```
 
 Zunächst bekam ich dieses Ergebnis:
+```
 Südlichste Tankstelle:
                                            name                            city  latitude
 7900             please delete - bitte loeschen  please delete - bitte loeschen       0.0
@@ -129,15 +130,18 @@ Südlichste Tankstelle:
 17257                           Aral Tankstelle                   Bad Krozingen       0.0
 17258                           Aral Tankstelle                           Essen       0.0
 17259                           Aral Tankstelle                   Heiligenstadt       0.0
-
+```
 
 Dann habe ich mein Skript um diese Zeile ergänzt:
+```
 df = df[df['latitude'] != 0.0]
-
+```
 Ergebnis:
+```
 Südlichste Tankstelle:
                                    name        city  latitude
 14758  Shell Mittenwald Am Brunnstein 2  Mittenwald  47.39957
+```
 ## Wie hoch war 2022 der höchste Preis für E10?
 
 
@@ -169,13 +173,14 @@ print("Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:"
 print(result)
 ```
 und hier das Ergebnis:
+```
 Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:
                        name            city  diesel                    date
 0  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:23:53+02
 1  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:41:16+02
 2  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:57:35+02
 3  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 22:13:54+02
-
+```
 
 
 ## Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten

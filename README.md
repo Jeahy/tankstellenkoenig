@@ -1,5 +1,24 @@
 # Big-Data-Traineeprogramm Challenge
 
+## Fragen
+
+1. Welches ist die südlichste Tankstelle Deutschlands?
+2. Wie hoch war 2022 der höchste Preis für E10?
+3. Wo gab es vorgestern den günstigsten Diesel?
+4. Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
+
+## Vorüberlegungen
+
+Es gib 3 Möglichkeiten um an Datan zu kommen:
+-    API Abfragen:
+    - Umkreissuche
+     - Preisabfrage für einzelne Tankstellen
+     - Detailabfrage für einzelne Tankstellen
+     - P: keine historischen Daten, für Frage 2
+     - Script für Frage 1 und 3: das so lange API abfragen macht, bis es die südlichste Tankstelle gefunden hat: API abfragen nur alle 5 min, unnötige Belastung vermeiden.
+- Postgres Dump für aktuelle und historische Daten -  Link hat leider gestern nicht funktioniert, außerdem ziemlich viel Daten, die ich nicht brauche, gerade für Frage 2 gibt es nur 2020-2023.
+- CSV Daten auf Azure Plattform
+
 ## Setup
 I created a Github repository and cloned it onto my virtual machine
 ```
@@ -10,11 +29,21 @@ I installed a virtual environment and activated it, because I will try to solve 
 virtualenv tkvenv
 source tkvenv/bin/activate
 ```
+Downloaded the pandas library
+```
+pip install pandas
+```
+Manuelles Herunterladen der CSVs:
+2024-04-07-prices.csv
+2024-04-07-stations.csv
+für Fragen 1 und 3
+
 I created a new database, user and tables on my PostgreSQL server
 ```
 psql -U postgres
 CREATE DATABASE tk_db;
 CREATE USER tk_user WITH PASSWORD 'tk_password';
+GRANT ALL PRIVILEGES ON DATABASE tk_db TO tk_user;
 CREATE TABLE gas_station_23 (
     id UUID PRIMARY KEY NOT NULL,
     version VARCHAR(10) NOT NULL,
@@ -51,9 +80,103 @@ sudo wget -O /home/pkn/tankstellenkoenig/data/history.dump.gz https://creativeco
 
 ## Welches ist die südlichste Tankstelle Deutschlands?
 
+```
+import pandas as pd
+
+# Daten aus CSV-Datei lesen
+data_file = '/Users/jessica/dev/projects/tankstellenkoenig/data/2024-04-07-stations.csv'
+df = pd.read_csv(data_file)
+
+# Zeilen mit fehlenden Breiten- oder Längengradwerten und Breitengraden, die gleich 0.0 sind, herausfiltern
+df = df.dropna(subset=['latitude', 'longitude'])
+df = df[df['latitude'] != 0.0]
+
+# Zeile mit dem minimalen Breitengradwert finden
+most_southern_station = df[df['latitude'] == df['latitude'].min()]
+
+# Name, Stadt und Breitengrad der südlichsten Tankstelle ausgeben
+print("Südlichste Tankstelle:")
+print(most_southern_station[['name', 'city', 'latitude']])
+
+```
+
+Zunächst bekam ich dieses Ergebnis:
+Südlichste Tankstelle:
+                                           name                            city  latitude
+7900             please delete - bitte loeschen  please delete - bitte loeschen       0.0
+13809                                  Eurotank                         Schwelm       0.0
+14191                                   01_test                             NaN       0.0
+15031          Raiffeisen Hohe Mark Hamaland eG                           Velen       0.0
+15334                   ZIEGLMEIER GmbH & Co.KG                      Ingolstadt       0.0
+15937                   Autohaus Rickmeier GmbH                      Lauenförde       0.0
+16066                         Hh Admi-Testkasse               Hh Admi-Testkasse       0.0
+16113                 Autohaus Franz Saaler OHG                    Herrischried       0.0
+16236                      Tankstelle Zajelsnik                        Freiburg       0.0
+16237                         Tankhof Kenzingen                       Kenzingen       0.0
+16798  Schrepfer Mineralöle und Brennstoffe Gmb                     Lichtenfels       0.0
+16799  Schrepfer Mineralöle und Brennstoffe Gmb                       Ebensfeld       0.0
+17197                           Aral Tankstelle                      Grafenberg       0.0
+17198                           Aral Tankstelle                    Schutterwald       0.0
+17206                           Aral Tankstelle                         Könnern       0.0
+17237                           Aral Tankstelle                        Dortmund       0.0
+17240                           Aral Tankstelle                    Bad Bentheim       0.0
+17241                           Aral Tankstelle                       Isselburg       0.0
+17251                           Aral Tankstelle                           Melle       0.0
+17252                           Aral Tankstelle                           Melle       0.0
+17254                           Aral Tankstelle                     Bremerhaven       0.0
+17255                           Aral Tankstelle                       Egelsbach       0.0
+17256                           Aral Tankstelle                       Lohfelden       0.0
+17257                           Aral Tankstelle                   Bad Krozingen       0.0
+17258                           Aral Tankstelle                           Essen       0.0
+17259                           Aral Tankstelle                   Heiligenstadt       0.0
+
+
+Dann habe ich mein Skript um diese Zeile ergänzt:
+df = df[df['latitude'] != 0.0]
+
+Ergebnis:
+Südlichste Tankstelle:
+                                   name        city  latitude
+14758  Shell Mittenwald Am Brunnstein 2  Mittenwald  47.39957
 ## Wie hoch war 2022 der höchste Preis für E10?
 
+
 ## Wo gab es vorgestern den günstigsten Diesel?
+
+hier wieder ein Python Skript: 
+```
+import pandas as pd
+
+# Daten aus den CSV-Dateien lesen
+stations = pd.read_csv('/Users/jessica/dev/projects/tankstellenkoenig/data/2024-04-07-stations.csv')
+prices = pd.read_csv('/Users/jessica/dev/projects/tankstellenkoenig/data/2024-04-07-prices.csv')
+
+# Filter out rows with missing latitude or longitude values and latitude equal to 0.0
+prices = prices.dropna(subset=['diesel'])
+prices = prices[prices['diesel'] != 0.0]
+
+# Filtere die Zeilen im DataFrame `prices`, um nur die Zeilen mit dem günstigsten Dieselpreis zu behalten
+min_diesel_price = prices[prices['diesel'] == prices['diesel'].min()]
+
+# Füge die Informationen aus dem DataFrame `stations` hinzu
+result = min_diesel_price.merge(stations, left_on='station_uuid', right_on='uuid', how='left')
+
+# Wähle die relevanten Spalten aus
+result = result[['name', 'city', 'diesel', 'date']]
+
+# Drucke die Ergebnisse
+print("Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:")
+print(result)
+```
+und hier das Ergebnis:
+Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:
+                       name            city  diesel                    date
+0  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:23:53+02
+1  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:41:16+02
+2  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:57:35+02
+3  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 22:13:54+02
+
+
 
 ## Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 Vorhersage Benzinpreise für 2024

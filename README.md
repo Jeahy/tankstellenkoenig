@@ -11,7 +11,7 @@ Diese Daten stehen öffentlich zur Verfügung.
 4. Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 
 ## Vorüberlegungen
-
+### Extrahieren
 Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an die benötigten Daten zu kommen:
 -    API-Abfragen:
      - Umkreissuche
@@ -22,11 +22,15 @@ Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an 
 - Postgres Dump für aktuelle und historische Daten
      - P: ziemlich viele Daten, die ich nicht brauche, weil Pakete mehrere Jahre enthalten (z.B.2020-2023)
      - P: Link hat leider gestern nicht funktioniert
-- CSV Daten auf Azure Plattform
+- CSV Daten auf Azure Cloud
 
-Pandas, PySpark oder hochladen in PostgreSQL-Datenbank?
+### Transformation
+Pandas oder PySpark?
 - Pandas: ausreichend für die Datenmenge, aber etwas langsam
 - Pyspark: schneller
+
+### Laden
+hochladen in PostgreSQL-Datenbank?
 - PostgreSQL: gut, falls weitere Analysen der Daten gewollt
 
 ## Setup
@@ -34,22 +38,22 @@ Ich habe ein Github Repository erstellt und es auf meinem Rechner dupliziert
 ```
 git clone https://github.com/Jeahy/tankstellenkoenig.git
 ```
-habe eine Virtuelle Umgebung für Python erstellt und sie aktiviert
+eine Virtuelle Umgebung für Python erstellt und sie aktiviert
 ```
 virtualenv tkvenv
 source tkvenv/bin/activate
 ```
-die Pandas bibliothek installiert
+Pandas installiert
 ```
 pip install pandas
 ```
-Manuelles Herunterladen der CSVs:
+die benötigten CSVs manuell von der Azure Cloud heruntergeladen:
 - 2024-04-07-prices.csv   
 - 2024-04-07-stations.csv    
 - alle CSVs für 2022
 
 ## Frage 1: Welches ist die südlichste Tankstelle Deutschlands?
-
+Mein Python-Skript
 ```
 import pandas as pd
 

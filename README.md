@@ -37,6 +37,7 @@ Manuelles Herunterladen der CSVs:
 2024-04-07-prices.csv   
 2024-04-07-stations.csv   
 für Fragen 1 und 3
+und Download der 2022er Daten für Frage 2
 
 I created a new database, user and tables on my PostgreSQL server
 ```
@@ -78,7 +79,7 @@ sudo wget -O /home/pkn/tankstellenkoenig/data/history.dump.gz https://creativeco
 ```
 
 
-## Welches ist die südlichste Tankstelle Deutschlands?
+## Frage 1: Welches ist die südlichste Tankstelle Deutschlands?
 
 ```
 import pandas as pd
@@ -142,10 +143,54 @@ Südlichste Tankstelle:
                                    name        city  latitude
 14758  Shell Mittenwald Am Brunnstein 2  Mittenwald  47.39957
 ```
-## Wie hoch war 2022 der höchste Preis für E10?
+Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
+## Frage 2: Wie hoch war 2022 der höchste Preis für E10?
+Pandas, Pyspark oder Postgres?
+Postgres für weitere Analyse
+Pandas würde vermutlich ausreichen bei der Datenmenge
+Pyspark etwas schneller
 
+Hier das Python Skript:
+```
+import os
+import pandas as pd
 
-## Wo gab es vorgestern den günstigsten Diesel?
+# Verzeichnis, in dem sich die CSV-Dateien befinden
+base_dir = '/Users/jessica/dev/projects/tankstellenkoenig/data/2022'
+
+# Liste zum Speichern der DataFrame-Objekte für jede CSV-Datei
+dfs = []
+
+# Durchlaufen der Unterordner und Dateien
+for subdir, _, files in os.walk(base_dir):
+    for file in files:
+        # Überprüfen, ob die Datei eine CSV-Datei ist
+        if file.endswith('.csv'):
+            # Pfad zur CSV-Datei erstellen
+            file_path = os.path.join(subdir, file)
+            # CSV-Datei einlesen und DataFrame erstellen
+            df = pd.read_csv(file_path)
+            # DataFrame zur Liste hinzufügen
+            dfs.append(df)
+
+# Alle DataFrames in der Liste zu einem einzigen DataFrame zusammenführen
+combined_df = pd.concat(dfs, ignore_index=True)
+
+# Den höchsten Dieselwert und die zugehörige Zeile im DataFrame finden
+max_diesel_row = combined_df.loc[combined_df['diesel'].idxmax()]
+
+# Den Preis, Tag und die Uhrzeit des höchsten Dieselwerts extrahieren
+highest_diesel_price = max_diesel_row['diesel']
+highest_diesel_date = max_diesel_row['date']
+
+print(f"Der höchste Dieselwert war {highest_diesel_price} am {highest_diesel_date}.")
+```
+Ergebnis nach ein paar Minuten: 
+```
+Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
+```
+
+## Frage 3: Wo gab es vorgestern den günstigsten Diesel?
 
 hier wieder ein Python Skript: 
 ```
@@ -181,7 +226,7 @@ Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:
 2  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 21:57:35+02
 3  Greenline Wutha-Farnroda  Wutha-Farnroda   1.588  2024-04-07 22:13:54+02
 ```
-
+Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
 
 ## Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 Vorhersage Benzinpreise für 2024

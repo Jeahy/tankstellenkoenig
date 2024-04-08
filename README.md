@@ -1,5 +1,3 @@
-# Big-Data-Traineeprogramm Challenge
-
 ## Fragen
 
 Unter https://creativecommons.tankerkoenig.de/ kannst du sämtliche Preise der deutschen Tankstellen abfragen.

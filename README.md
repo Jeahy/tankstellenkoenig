@@ -17,9 +17,11 @@ Es gib 3 Möglichkeiten um an Datan zu kommen:
      - Umkreissuche
      - Preisabfrage für einzelne Tankstellen
      - Detailabfrage für einzelne Tankstellen
-     - P: keine historischen Daten, für Frage 2
-     - Script für Frage 1 und 3: das so lange API abfragen macht, bis es die südlichste Tankstelle gefunden hat: API abfragen nur alle 5 min, unnötige Belastung vermeiden.
-- Postgres Dump für aktuelle und historische Daten -  Link hat leider gestern nicht funktioniert, außerdem ziemlich viel Daten, die ich nicht brauche, gerade für Frage 2 gibt es nur 2020-2023.
+     - P: keine historischen Daten für Frage 2
+     - P: für Frage 1 und 3 müsste man so lange API-Abfragen machen, bis man die südlichste Tankstelle bzw den günstigsten Diesel gefunden hat. Laut Webseite soll man aber maximal alle 5min eine API-Abfrage machen und unnötige Belastung vermeiden.
+- Postgres Dump für aktuelle und historische Daten
+     - P: ziemlich viele Daten, die ich nicht brauche, weil Pakete mehrere Jahre enthalten (z.B.2020-2023)
+     - P: Link hat leider gestern nicht funktioniert
 - CSV Daten auf Azure Plattform
 
 ## Setup

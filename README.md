@@ -193,7 +193,7 @@ Name der Tankstelle mit dem günstigsten Diesel, Ort, Preis und Uhrzeit:
 ```
 Sinnvoll wären Plausibilitätsprüfungen anhand von höchstem Wert und Durchschnittswert.
 
-## Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
+## Frage 4: Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 Vorhersage Benzinpreise für 2024
 Verhältnis Lage (Norden, Süden, Osten, Westen) und Preise
 Verhältnis Öffnungszeiten und Preise

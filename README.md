@@ -43,6 +43,11 @@ CREATE TABLE gas_station_information_history_23 (
 ```
 and the same for the 2020-2023 data
 
+I downloaded the data
+```
+sudo wget -O /home/pkn/tankstellenkoenig/data/history.dump.gz https://creativecommons.tankerkoenig.de/history/history.dump.gz
+```
+
 
 ## Welches ist die südlichste Tankstelle Deutschlands?
 

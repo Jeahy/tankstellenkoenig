@@ -12,8 +12,8 @@ Diese Daten stehen öffentlich zur Verfügung.
 
 ## Vorüberlegungen
 
-Es gib 3 Möglichkeiten um an Datan zu kommen:
--    API Abfragen:
+Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an die benötigten Daten zu kommen:
+-    API-Abfragen:
      - Umkreissuche
      - Preisabfrage für einzelne Tankstellen
      - Detailabfrage für einzelne Tankstellen

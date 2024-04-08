@@ -24,6 +24,11 @@ Es gib drei Möglichkeiten um über https://creativecommons.tankerkoenig.de/ an 
      - P: Link hat leider gestern nicht funktioniert
 - CSV Daten auf Azure Plattform
 
+Pandas, PySpark oder hochladen in PostgreSQL-Datenbank?
+- Pandas: ausreichend für die Datenmenge, aber etwas langsam
+- Pyspark: schneller
+- PostgreSQL: gut, falls weitere Analysen der Daten gewollt
+
 ## Setup
 I created a Github repository and cloned it onto my virtual machine
 ```
@@ -109,10 +114,7 @@ Südlichste Tankstelle:
 ```
 Plausibilitätsprüfung anhand von höchstem Wert und Durchschnittswert.
 ## Frage 2: Wie hoch war 2022 der höchste Preis für E10?  
-Pandas, PySpark oder hochladen in PostgreSQL-Datenbank?
-- Pandas: ausreichend für die Datenmenge, aber etwas langsam
-- Pyspark: schneller
-- PostgreSQL: gut, falls weitere Analysen der Daten gewollt
+
 
 Hier das Python Skript:
 ```

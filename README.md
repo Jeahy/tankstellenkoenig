@@ -158,12 +158,12 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, FloatType, TimestampType
 import os
 
-# Initialize Spark session
+# Initialisiere Spark Session
 spark = SparkSession.builder \
     .appName("Read CSV with PySpark") \
     .getOrCreate()
 
-# Define the schema for the CSV files
+# Definiere das Schema der CSV Datei
 schema = StructType([
     StructField("date", TimestampType(), True),
     StructField("station_uuid", StringType(), True),
@@ -175,33 +175,33 @@ schema = StructType([
     StructField("e10change", StringType(), True)
 ])
 
-# Path to the directory containing the CSV files
+# Pfad zum Ordner, der die CSV Datei enthält
 base_dir = '/Users/jessica/dev/projects/tankstellenkoenig/data/2022'
 
-# List to store DataFrame objects for each CSV file
+# Liste um DataFrame Objekte für jede CSV Datei zu speichern
 dfs = []
 
-# Iterate through subdirectories and files
+# Durchlaufe die Unterverzeichnisse und Dateien iterativ
 for subdir, _, files in os.walk(base_dir):
     for file in files:
-        # Check if the file is a CSV file
+        # Überprüfe, ob die Datei eine CSV Datei ist
         if file.endswith('.csv'):
-            # Create path to the CSV file
+            # Erstelle einen Pfad zur CSV Datei
             file_path = os.path.join(subdir, file)
-            # Read the CSV file and create DataFrame
+            # Lese die CSV Datei ein und erstelle einen DataFrame
             df = spark.read.option("header", "true").schema(schema).csv(file_path)
-            # Append DataFrame to the list
+            # Füge den DataFrame an die Liste an
             dfs.append(df)
 
-# Combine all DataFrames in the list into a single DataFrame
+# Kombiniere alle DataFrames in der liste zu einem einzigen DataFrame
 combined_df = dfs[0]
 for df in dfs[1:]:
     combined_df = combined_df.union(df)
 
-# Find the row with the highest diesel value
+# Finde die Zeile mit dem höchsten Dieselwert
 max_diesel_row = combined_df.orderBy(combined_df['diesel'].desc()).first()
 
-# Extract the price, date, and time of the highest diesel value
+# Extrahiere den Preis und Datum und Uhrzeit des höchsten Dieselwertes
 highest_diesel_price = max_diesel_row['diesel']
 highest_diesel_date = max_diesel_row['date']
 

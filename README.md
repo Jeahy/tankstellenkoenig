@@ -254,5 +254,6 @@ Sinnvoll wären Plausibilitätsprüfungen anhand von höchstem Wert und Durchsch
 
 ## Frage 4: Überlege Dir welche Analysen man mit den Daten noch alles machen könnte? Nenne mindestens zwei Möglichkeiten
 - Vorhersage Benzinpreise für 2024 -  lineare Regression
-- Welche Wochentage und Uhrzeiten sind gut zum Tanken - Pandas
+- Welche Wochentage und Uhrzeiten sind gut zum Tanken - Pandas, Histogram mit Matplotlib, 
+- Niedrigste, höchste und durchschnittliche Preise im Nordwesten, Nordosten, Südosten und Südwesten Deutschlands
 

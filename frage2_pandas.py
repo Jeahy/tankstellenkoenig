@@ -22,11 +22,11 @@ for subdir, _, files in os.walk(base_dir):
 # Alle DataFrames in der Liste zu einem einzigen DataFrame zusammenführen
 combined_df = pd.concat(dfs, ignore_index=True)
 
-# Den höchsten Dieselwert und die zugehörige Zeile im DataFrame finden
-max_diesel_row = combined_df.loc[combined_df['diesel'].idxmax()]
+# Den höchsten E10-Wert und die zugehörige Zeile im DataFrame finden
+max_e10_row = combined_df.loc[combined_df['e10'].idxmax()]
 
-# Den Preis, Tag und die Uhrzeit des höchsten Dieselwerts extrahieren
-highest_diesel_price = max_diesel_row['diesel']
-highest_diesel_date = max_diesel_row['date']
+# Den Preis, Tag und die Uhrzeit des höchsten E10-Werts extrahieren
+highest_e10_price = max_e10_row['e10']
+highest_e10_date = max_e10_row['date']
 
-print(f"Der höchste Dieselwert war {highest_diesel_price} am {highest_diesel_date}.")
+print(f"Der höchste E10-Wert war {highest_e10_price} am {highest_e10_date}.")

@@ -209,7 +209,7 @@ print(f"Der höchste E10-Preis war {highest_e10_price} am {highest_e10_date}.")
 ````
 Ergebnis hier:
 ```
-Der höchste E10-Wert war 4.999 am 2022-03-15 07:41:06+01.
+Der höchste E10-Preis war 4.999000072479248 am 2022-03-15 12:06:05.
 ```
 Die Verarbeitung mit PySpark war allerdings viel langsamer als mit Pandas, da ich Spark nur im lokalen Mudus mit einer Master und einer Worker Node ausgeführt habe, ohne von der verteilten Verarbeitung zu profitieren.    
 

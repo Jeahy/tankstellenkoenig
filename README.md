@@ -139,18 +139,18 @@ for subdir, _, files in os.walk(base_dir):
 # Alle DataFrames in der Liste zu einem einzigen DataFrame zusammenführen
 combined_df = pd.concat(dfs, ignore_index=True)
 
-# Den höchsten Dieselwert und die zugehörige Zeile im DataFrame finden
-max_diesel_row = combined_df.loc[combined_df['diesel'].idxmax()]
+# Den höchsten E10-Wert und die zugehörige Zeile im DataFrame finden
+max_e10_row = combined_df.loc[combined_df['e10'].idxmax()]
 
-# Den Preis, Tag und die Uhrzeit des höchsten Dieselwerts extrahieren
-highest_diesel_price = max_diesel_row['diesel']
-highest_diesel_date = max_diesel_row['date']
+# Den Preis, Tag und die Uhrzeit des höchsten E10-Werts extrahieren
+highest_e10_price = max_e10_row['e10']
+highest_e10_date = max_e10_row['date']
 
-print(f"Der höchste Dieselwert war {highest_diesel_price} am {highest_diesel_date}.")
+print(f"Der höchste E10-Wert war {highest_e10_price} am {highest_e10_date}.")
 ```
 Ergebnis nach ein paar Minuten: 
 ```
-Der höchste Dieselwert war 4.999 am 2022-05-31 13:41:07+02.
+Der höchste E10-Wert war 4.999 am 2022-03-15 07:41:06+01.
 ```
 ### Python Skript mit PySpark
 ```
@@ -158,12 +158,12 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, FloatType, TimestampType
 import os
 
-# Initialisiere Spark Session
+# Initialisiere die Spark-Sitzung
 spark = SparkSession.builder \
-    .appName("Read CSV with PySpark") \
+    .appName("CSV mit PySpark lesen") \
     .getOrCreate()
 
-# Definiere das Schema der CSV Datei
+# Definiere das Schema für die CSV-Dateien
 schema = StructType([
     StructField("date", TimestampType(), True),
     StructField("station_uuid", StringType(), True),
@@ -175,41 +175,41 @@ schema = StructType([
     StructField("e10change", StringType(), True)
 ])
 
-# Pfad zum Ordner, der die CSV Datei enthält
+# Pfad zum Verzeichnis mit den CSV-Dateien
 base_dir = '/Users/jessica/dev/projects/tankstellenkoenig/data/2022'
 
-# Liste um DataFrame Objekte für jede CSV Datei zu speichern
+# Liste zum Speichern der DataFrame-Objekte für jede CSV-Datei
 dfs = []
 
-# Durchlaufe die Unterverzeichnisse und Dateien iterativ
+# Iteriere durch Unterverzeichnisse und Dateien
 for subdir, _, files in os.walk(base_dir):
     for file in files:
-        # Überprüfe, ob die Datei eine CSV Datei ist
+        # Überprüfe, ob die Datei eine CSV-Datei ist
         if file.endswith('.csv'):
-            # Erstelle einen Pfad zur CSV Datei
+            # Erstelle den Pfad zur CSV-Datei
             file_path = os.path.join(subdir, file)
-            # Lese die CSV Datei ein und erstelle einen DataFrame
+            # Lese die CSV-Datei und erstelle DataFrame
             df = spark.read.option("header", "true").schema(schema).csv(file_path)
-            # Füge den DataFrame an die Liste an
+            # Füge den DataFrame zur Liste hinzu
             dfs.append(df)
 
-# Kombiniere alle DataFrames in der liste zu einem einzigen DataFrame
+# Kombiniere alle DataFrames in der Liste zu einem einzigen DataFrame
 combined_df = dfs[0]
 for df in dfs[1:]:
     combined_df = combined_df.union(df)
 
-# Finde die Zeile mit dem höchsten Dieselwert
-max_diesel_row = combined_df.orderBy(combined_df['diesel'].desc()).first()
+# Finde die Zeile mit dem höchsten E10-Wert
+max_e10_row = combined_df.orderBy(combined_df['e10'].desc()).first()
 
-# Extrahiere den Preis und Datum und Uhrzeit des höchsten Dieselwertes
-highest_diesel_price = max_diesel_row['diesel']
-highest_diesel_date = max_diesel_row['date']
+# Extrahiere den Preis, das Datum und die Uhrzeit des höchsten E10-Werts
+highest_e10_price = max_e10_row['e10']
+highest_e10_date = max_e10_row['date']
 
-print(f"Der höchste Dieselwert war {highest_diesel_price} am {highest_diesel_date}.")
+print(f"Der höchste E10-Preis war {highest_e10_price} am {highest_e10_date}.")
 ````
 Ergebnis hier:
 ```
-Der höchste Dieselwert war 4.999000072479248 am 2022-05-31 13:41:07.
+Der höchste E10-Wert war 4.999 am 2022-03-15 07:41:06+01.
 ```
 Die Verarbeitung mit PySpark war allerdings viel langsamer als mit Pandas, da ich Spark nur im lokalen Mudus mit einer Master und einer Worker Node ausgeführt habe, ohne von der verteilten Verarbeitung zu profitieren.    
 

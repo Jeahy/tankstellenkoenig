@@ -40,9 +40,10 @@ eine Virtuelle Umgebung für Python erstellt und sie aktiviert
 virtualenv tkvenv
 source tkvenv/bin/activate
 ```
-Pandas installiert
+Pandas und PySpark installiert
 ```
 pip install pandas
+pip install pyspark
 ```
 die benötigten CSVs manuell von der Azure Cloud heruntergeladen:
 - 2024-04-07-prices.csv   

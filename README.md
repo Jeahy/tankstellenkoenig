@@ -22,7 +22,7 @@ Es gib drei Möglichkeiten über https://creativecommons.tankerkoenig.de/ an die
      - P: Link hat leider gestern nicht funktioniert
 - CSV Daten auf Azure Cloud
 
-### Transformation
+### Bearbeiten
 Pandas oder PySpark?
 - Pandas: schnelles Setup
 - PySpark: schnellere Verarbeitung
